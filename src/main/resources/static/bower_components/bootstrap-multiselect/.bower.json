@@ -1,0 +1,22 @@
+{
+  "name": "bootstrap-multiselect",
+  "version": "0.9.7",
+  "main": [
+    "./js/bootstrap-multiselect.js",
+    "./css/bootstrap-multiselect.css"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.11.0",
+    "bootstrap": ">= 2.3.2"
+  },
+  "homepage": "https://github.com/davidstutz/bootstrap-multiselect",
+  "_release": "0.9.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.9.7",
+    "commit": "3cfdfaab98816bd3a3cc9cf6be45df56e4eefa37"
+  },
+  "_source": "git://github.com/davidstutz/bootstrap-multiselect.git",
+  "_target": "*",
+  "_originalSource": "bootstrap-multiselect"
+}

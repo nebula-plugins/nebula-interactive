@@ -1,0 +1,15 @@
+{
+  "name": "gremlin-console",
+  "main": "Gruntfile.js",
+  "description": "Nebula Interactive",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@stash.corp.netflix.com:7999/nebula/nebula-interactive.git"
+  },
+  "license": "Commercial",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jasmine": "~0.7.0",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}

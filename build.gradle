@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.1.8.RELEASE'
+        classpath 'com.moowork.gradle:gradle-grunt-plugin:0.6'
+        classpath 'com.moowork.gradle:gradle-node-plugin:0.6'
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'com.moowork.grunt'
+apply plugin: 'com.moowork.node'
+
+repositories {
+    mavenCentral()
+}
+
+// node and NPM will be automatically installed if necessary
+node {
+    version = '0.10.25'
+    download = true
+}
+
+dependencies {
+    compile gradleApi()
+    compile 'org.codehaus.groovy:groovy-all:2.3.3'
+    compile 'com.netflix.karyon:karyon-core:2.1.+'
+
+    // TODO may only need gradle api
+    compile 'com.netflix.nebula:nebula-core:1.12.+'
+
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1.3'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.4.1'
+
+    testCompile 'com.netflix.nebula:nebula-test:1.12.+'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+}
+
+// makes sure that grunt is installed, and process package.json before running grunt build
+grunt_test.dependsOn(['installGrunt', 'npmInstall'])
+
+test.dependsOn grunt_test

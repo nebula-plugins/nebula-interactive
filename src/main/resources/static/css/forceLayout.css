@@ -1,0 +1,47 @@
+.node circle {
+  cursor: pointer;
+}
+
+.node text {
+    font: 12px sans-serif;
+    font-weight: bold;
+    fill: black;
+    cursor: pointer;
+}
+
+.link {
+    stroke: #999;
+    stroke-opacity: .6;
+    stroke-width: 2;
+    marker-end: url(#end-arrow);
+}
+
+.background {
+    stroke: gray;
+    stroke-width: 1px;
+    fill: none;
+}
+
+.sendIt i {
+    font-size:16pt;
+    color:black;
+}
+
+.sendIt:hover i {
+    font-size:16pt;
+    color:orange;
+}
+
+.edgeLabel {
+  fill: #333;
+  font: 9px sans-serif;
+  pointer-events: none;
+}
+
+.d3-tip {
+  line-height: 1;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}

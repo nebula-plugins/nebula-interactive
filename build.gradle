@@ -27,7 +27,8 @@ node {
 dependencies {
     compile gradleApi()
     compile 'org.codehaus.groovy:groovy-all:2.3.3'
-    compile 'com.netflix.karyon:karyon-core:2.1.+'
+    compile 'com.netflix.rxnetty:rx-netty:0.3.+'
+//    compile 'com.netflix.karyon:karyon-core:2.1.+'
 
     // TODO may only need gradle api
     compile 'com.netflix.nebula:nebula-core:1.12.+'

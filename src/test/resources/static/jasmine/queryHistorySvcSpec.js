@@ -3,7 +3,7 @@ describe('Query history service', function() {
     var $cookies;
     var controller;
 
-    beforeEach(module('graphConsole'));
+    beforeEach(module('nebulaInteractive'));
 
     beforeEach(inject(function($rootScope, $controller) {
         controller = $controller;
@@ -13,13 +13,13 @@ describe('Query history service', function() {
 
     it('Query history contains only the current command when no cookie is present', function() {
         $scope.command = 'out.path.scatter';
-        controller('GremlinCtrl', { $scope: $scope, $cookies: $cookies });
+        controller('DependenciesCtrl', { $scope: $scope, $cookies: $cookies });
         expect($scope.history.history.length).toBe(1);
         expect($scope.history.history[0]).toBe($scope.command);
     });
 
     it('Current command is saved to cookie only when it is not identical to prior command in history', function() {
-        controller('GremlinCtrl', { $scope: $scope, $cookies: $cookies });
+        controller('DependenciesCtrl', { $scope: $scope, $cookies: $cookies });
         var svc = $scope.history;
 
         $scope.command = 'out.path.scatter'; $scope.$apply();
@@ -37,7 +37,7 @@ describe('Query history service', function() {
     });
 
     it('Query history is stored up to a specified maximum number of elements', function() {
-        controller('GremlinCtrl', { $scope: $scope, $cookies: $cookies });
+        controller('DependenciesCtrl', { $scope: $scope, $cookies: $cookies });
         var svc = $scope.history;
         for(var i = 0; i < svc.maxHistory+10; i++) {
             $scope.command = '' + i;

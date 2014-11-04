@@ -1,5 +1,5 @@
 .node circle {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .node text {
@@ -12,6 +12,13 @@
 .link {
     stroke: #999;
     stroke-opacity: .6;
+    stroke-width: 2;
+    marker-end: url(#end-arrow);
+}
+
+.firstOrderLink {
+    stroke: orange;
+    stroke-opacity: .8;
     stroke-width: 2;
     marker-end: url(#end-arrow);
 }
@@ -40,8 +47,8 @@
 
 .d3-tip {
   line-height: 1;
-  padding: 12px;
+  padding: 4px;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
-  border-radius: 2px;
+  border-radius: 6px;
 }

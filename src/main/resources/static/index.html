@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html ng-app="graphConsole">
+<html ng-app="nebulaInteractive">
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Graph Console</title>
+    <title>Nebula Interactive</title>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css"/>
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="bower_components/codemirror/theme/eclipse.css">
     <link rel="stylesheet" href="bower_components/codemirror/addon/hint/show-hint.css">
+    <link rel="stylesheet" href="bower_components/colorbrewer/colorbrewer.css">
     <link rel="stylesheet" href="css/forceLayout.css">
 
     <script src="bower_components/angular/angular.min.js"></script>
@@ -23,21 +24,21 @@
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
     <script src="bower_components/codemirror/lib/codemirror.js"></script>
-    <script src="bower_components/zeroclipboard/dist/ZeroClipboard.min.js"></script>
 
     <script src="bower_components/d3/d3.min.js"></script>
     <script src='bower_components/d3-tip/index.js'></script>
     <script src="bower_components/webcola/WebCola/cola.v3.min.js"></script>
 
-    <script src="autocomplete/gremlin.js"></script>
-    <script src="autocomplete/gremlin-hint.js"></script>
     <script src="bower_components/codemirror/addon/hint/show-hint.js"></script>
 
+    <script src="bower_components/colorbrewer/colorbrewer.js"></script>
+
     <script src="algorithms/bfsMinimumSpanningTrees.js"></script>
+    <script src="algorithms/floydWarshallShortestPath.js"></script>
 
     <script src="services/queryHistorySvc.js"></script>
     <script src="controllers/app.js"></script>
-    <script src="controllers/gremlinCtrl.js"></script>
+    <script src="controllers/dependenciesCtrl.js"></script>
     <script src="filters/groupBy.js"></script>
 </head>
 <body>

@@ -24,6 +24,6 @@
     "webcola": "latest",
     "angular-sanitize": "latest",
     "angular-route": "latest",
-    "zeroclipboard": "latest"
+    "colorbrewer": "latest"
   }
 }

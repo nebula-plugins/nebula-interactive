@@ -18,7 +18,8 @@ module.exports = function(grunt) {
                 'src/main/resources/static/bower_components/d3/d3.min.js',
                 'src/main/resources/static/bower_components/webcola/WebCola/cola.v3.min.js',
                 'src/main/resources/static/bower_components/lodash/dist/lodash.min.js',
-                'src/main/resources/static/bower_components/codemirror/addon/hint/show-hint.js'
+                'src/main/resources/static/bower_components/codemirror/addon/hint/show-hint.js',
+                'src/main/resources/static/bower_components/colorbrewer/colorbrewer.js'
             ],
             specs: 'src/test/resources/static/jasmine/**/*.js',
             keepRunner: true

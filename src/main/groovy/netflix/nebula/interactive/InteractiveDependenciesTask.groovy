@@ -1,13 +1,10 @@
 package netflix.nebula.interactive
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.netflix.karyon.transport.http.SimpleUriRouter
 import groovy.transform.Canonical
 import groovy.transform.EqualsAndHashCode
-import groovy.transform.TailRecursive
+import io.netty.handler.codec.http.HttpHeaders
 import io.reactivex.netty.RxNetty
-import io.reactivex.netty.protocol.http.server.HttpServerRequest
-import io.reactivex.netty.protocol.http.server.HttpServerResponse
 import io.reactivex.netty.protocol.http.server.RequestHandler
 import io.reactivex.netty.protocol.http.server.RequestHandlerWithErrorMapper
 import io.reactivex.netty.protocol.http.server.file.ClassPathFileRequestHandler
@@ -23,55 +20,71 @@ import java.util.concurrent.TimeUnit
 class InteractiveDependenciesTask extends DefaultTask {
     private final int PORT = 8641
 
-    @Canonical
-    @EqualsAndHashCode(excludes = 'index')
-    class Artifact {
-        String org
-        String name
-        String version
-        int index
+    int recurseDependencies(Set artifacts, Set links, ResolvedDependency dep, int index) {
+        def artifact = new Artifact(dep)
+        if(artifacts.add(artifact)) {
+            artifact.index = index++
+            for (ResolvedDependency child : dep.children) {
+                index = recurseDependencies(artifacts, links, child, index)
+                links.add(new Link(artifact, new Artifact(child)))
+            }
+        }
+        return index
     }
 
-    @TailRecursive
-    def recurseDependencies(Map results, int index, Set<ResolvedDependency> deps) {
-        int parentIndex = index
-        def allChildren = new HashSet();
-        deps.each { dep ->
-            results.nodes.add(new Artifact(dep.moduleGroup, dep.moduleName, dep.moduleVersion, index++))
-            results.links.add([source: parentIndex, target: index])
-            allChildren.addAll(dep.children)
-        }
-        if(!allChildren.empty)
-            return recurseDependencies(results, index, allChildren)
-        return results
+    ResolvedDependency projectAsResolvedDependency() {
+        [
+            getModuleGroup: { project.group },
+            getModuleName: { project.name },
+            getModuleVersion: { project.version },
+            getChildren: { project.configurations.compile.resolvedConfiguration.firstLevelModuleDependencies }
+        ] as ResolvedDependency
     }
 
     @TaskAction
     def serveInteractiveContent() {
+        def links = new HashSet()
+        def nodes = new LinkedHashSet()
+
+        recurseDependencies(nodes, links, projectAsResolvedDependency(), 0)
+
+        def results = [
+            nodes: new ArrayList(nodes),
+            links: links.collect { link -> [source: link.source.index, target: nodes.find { it == link.target }.index] }
+        ]
+
+        def resultJson = new ObjectMapper().writeValueAsString(results)
+        println resultJson
+
         def server = null
         try {
             def latch = new CountDownLatch(1)
 
+            def staticHandler = RequestHandlerWithErrorMapper.from(
+                    new ClassPathFileRequestHandler('./static'),
+                    new FileErrorResponseMapper())
+
             server = RxNetty.createHttpServer(PORT,
-                new SimpleUriRouter()
-                    .addUri('/dependencies', { HttpServerRequest request, HttpServerResponse response ->
-                        String conf = request.queryParameters['conf'] ?: 'compile'
-
-                        def results = recurseDependencies([nodes: new LinkedHashSet(), links: []], 0, project.configurations[conf].resolvedConfiguration.firstLevelModuleDependencies)
-                        response.writeString(new ObjectMapper().writeValueAsString(results))
-
-                        latch.countDown()
-                        response.close()
-                    } as RequestHandler)
-                    .addUri('/static/*', RequestHandlerWithErrorMapper.from(
-                        new ClassPathFileRequestHandler('.'),
-                        new FileErrorResponseMapper())
+                new HttpRouter()
+                    .get('/dependencies',
+                        { request, response ->
+                            response.getHeaders().set(HttpHeaders.Names.CONTENT_TYPE, 'application/json');
+                            response.writeString(resultJson)
+                            latch.countDown()
+                        } as RequestHandler
+                    )
+                    .noMatch(
+//                        { request, response ->
+//                            request.uriInfoHolder.
+//                        }
+                        staticHandler
                     )
             ).start()
 
-            Desktop.getDesktop().browse(new URI("http://localhost:$PORT/dependencies"))
+            Desktop.getDesktop().browse(new URI("http://localhost:$PORT/index.html"))
 
-            latch.await(60, TimeUnit.SECONDS)
+//            latch.await(60, TimeUnit.SECONDS)
+            latch.await()
         } finally {
             server?.shutdown()
         }

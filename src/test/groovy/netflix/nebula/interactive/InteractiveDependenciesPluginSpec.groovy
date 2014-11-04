@@ -8,8 +8,13 @@ class InteractiveDependenciesPluginSpec extends IntegrationSpec {
         buildFile << '''
             apply plugin: 'java'
             apply plugin: 'nebula-interactive'
-            repositories { mavenCentral() }
-            dependencies { compile 'org.springframework:spring-tx:+' }
+            repositories { mavenLocal() }
+//            dependencies { compile 'org.springframework:spring-tx:+' }
+            dependencies {
+                compile 'com.thinkaurelius.titan:titan-core:0.4.5-SNAPSHOT'
+//                compile 'com.thinkaurelius.titan:titan-cassandra:0.9.0-SNAPSHOT'
+                compile 'org.codehaus.groovy:groovy-all:2.3.3'
+            }
         '''.stripIndent()
 
         expect:

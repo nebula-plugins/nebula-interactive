@@ -69,7 +69,7 @@ class InteractiveDependenciesTask extends DefaultTask {
                         { request, response ->
                             response.getHeaders().set(HttpHeaders.Names.CONTENT_TYPE, 'application/json');
                             response.writeString(resultJson)
-//                            latch.countDown()
+                            latch.countDown()
                         } as RequestHandler
                     )
                     .noMatch(
@@ -79,8 +79,7 @@ class InteractiveDependenciesTask extends DefaultTask {
 
             Desktop.getDesktop().browse(new URI("http://localhost:$PORT/index.html"))
 
-//            latch.await(60, TimeUnit.SECONDS)
-            latch.await()
+            latch.await(60, TimeUnit.SECONDS)
         } finally {
             server?.shutdown()
         }

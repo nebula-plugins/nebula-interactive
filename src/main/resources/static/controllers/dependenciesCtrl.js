@@ -91,7 +91,7 @@ app.controller('DependenciesCtrl', function($scope, Restangular) {
         .range([12,6])
         .clamp(true);
 
-    var colorByDistance = d3.scale.ordinal().domain([0,5]).range(colorbrewer.RdBu[6]);
+    var colorByDistance = d3.scale.ordinal().domain([0,5]).range(colorbrewer.Blues[6].reverse());
     createLegendBox();
 
     if(d3.tip != null) { // protect jasmine tests since d3-tip does not load correctly in jasmine
@@ -226,7 +226,7 @@ app.controller('DependenciesCtrl', function($scope, Restangular) {
             });
 
         nodeG.append("text")
-            .attr("y", nodeRadius+8)
+            .attr("y", function(d) { return d.index == 0 ? nodeRadius + 16 : nodeRadius + 10; })
             .attr("text-anchor", "middle");
 
         node.selectAll(".hiddenEdgeMarkers").remove();
@@ -317,12 +317,35 @@ app.controller('DependenciesCtrl', function($scope, Restangular) {
             return d3.rgb(dist == Infinity ? '#666' : colorByDistance(Math.min(dist, 4)));
         };
 
-        viewport.selectAll(".node").selectAll("circle")
-            .transition()
-            .style("fill", nodeColor)
-            .style("stroke", function (d) { return nodeColor(d).darker(2) });
+        var shortestPath = distMatrix.path(root, focus);
 
-        focusOnPath(root);
+        var shortestPathEdges = shortestPath.map(function(d) { return d.source.index + ":" + d.target.index; });
+        var inPath = function(d) {
+            return shortestPathEdges.indexOf(d.source.index + ":" + d.target.index) > -1;
+        };
+
+        var shortestPathNodes = shortestPath.map(function(d) { return d.source.index; });
+        var inboundSources = (edgesByTarget[focus.index] ? edgesByTarget[focus.index] : []).map(function(d) { return d.source });
+
+        var nodeOpacity = function(d) {
+            if(distMatrix.dist(focus, d) < Infinity) return 1.0;
+            if(shortestPathNodes.indexOf(d.index) > -1 || inboundSources.indexOf(d.index) > -1) return 0.8;
+            return 0.1;
+        };
+
+        viewport.selectAll(".node").selectAll("circle")
+            .style("fill", nodeColor)
+            .style("stroke", function (d) { return nodeColor(d).darker(2) })
+            .style("fill-opacity", nodeOpacity)
+            .style("stroke-opacity", nodeOpacity);
+
+        viewport.selectAll(".link")
+            .style("stroke-opacity", function(d) {
+                return (distMatrix.dist(focus, d.target) < Infinity || inPath(d)) ? 1.0 : 0.1;
+            })
+            .style("stroke", function(d) { return inPath(d) ? 'magenta' : '#999' })
+            .style("stroke-dasharray", function(d) { return inPath(d) ? "5,5" : "0,0" });
+
         displayFirstOrderDependantLinks();
         updateNodeLabels();
 
@@ -411,21 +434,5 @@ app.controller('DependenciesCtrl', function($scope, Restangular) {
                     { x: d.arrowStart.x, y: d.arrowStart.y }
                 ]);
             });
-    }
-
-    function focusOnPath(root) {
-        var shortestPath = distMatrix.path(root, focus);
-
-        var inPath = function(d) {
-            var intersection = shortestPath.filter(function(seg) {
-                return seg.source.name == d.source.name && seg.target.name == d.target.name
-            });
-            return intersection.length > 0
-        };
-
-        viewport.selectAll(".link")
-            .style("stroke", function(d) { return inPath(d) ? 'magenta' : '#999' })
-            .style("stroke-dasharray", function(d) { return inPath(d) ? "5,5" : "0,0" })
-            .style("stroke-opacity", function(d) { return inPath(d) ? 1 : 0.6 });
     }
 });

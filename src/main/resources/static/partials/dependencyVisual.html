@@ -1,11 +1,9 @@
-<h2 ng-if="graphElements && graphElements.length != 0" style="display:inline;color:#999">{{graphElements[0].org}}</h2>
-<h2 ng-if="graphElements && graphElements.length != 0" style="display:inline">#{{graphElements[0].name}}</h2>
-
-<div class="row" ng-show="graphElements && graphElements.length != 0" style="margin-top:10px">
+<div class="row" style="margin-left:20px" ng-show="graphElements && graphElements.length != 0" style="margin-top:10px">
+    <h2><span style="color:#999">{{graphElements[0].org}}</span> #{{graphElements[0].name}}</h2>
     <input id="search" class="typeahead" type="text" placeholder="model name">
 </div>
 
-<div class="row" ng-show="graphElements && graphElements.length != 0" style="margin-top:10px">
+<div ng-show="graphElements && graphElements.length != 0" style="margin-top:10px">
     <div id="graph"></div>
 </div>
 

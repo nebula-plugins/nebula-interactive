@@ -3,9 +3,8 @@
 }
 
 .node text {
-    font: 12px sans-serif;
-    fill: black;
-    /*cursor: pointer;*/
+    font: sans-serif;
+    cursor: pointer;
 }
 
 .link {
@@ -50,4 +49,11 @@
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   border-radius: 6px;
+}
+
+.legend-box {
+    stroke: #444;
+    stroke-width: 1px;
+    border-radius: 6px;
+    fill: white;
 }

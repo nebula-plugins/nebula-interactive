@@ -73,9 +73,6 @@ class InteractiveDependenciesTask extends DefaultTask {
                         } as RequestHandler
                     )
                     .noMatch(
-//                        { request, response ->
-//                            request.uriInfoHolder.
-//                        }
                         staticHandler
                     )
             ).start()

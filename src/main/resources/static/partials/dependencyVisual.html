@@ -1,19 +1,19 @@
-<h1>Dependencies</h1>
+<h2 ng-if="graphElements && graphElements.length != 0" style="display:inline;color:#999">{{graphElements[0].org}}</h2>
+<h2 ng-if="graphElements && graphElements.length != 0" style="display:inline">#{{graphElements[0].name}}</h2>
 
-<div class="row" ng-show="graphElements && graphElements.length != 0" >
-    <div class="col-md-12" id="graph"></div>
+<div class="row" ng-show="graphElements && graphElements.length != 0" style="margin-top:10px">
+    <input id="search" class="typeahead" type="text" placeholder="model name">
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <i class="fa fa-columns"></i> <strong>Columns</strong>
-        <!--<ui-multiselect options="typeProperties(type)" affected-list="visiblePropsByType[type]"></ui-multiselect>-->
+<div class="row" ng-show="graphElements && graphElements.length != 0" style="margin-top:10px">
+    <div id="graph"></div>
+</div>
 
+<!--<div class="row" ng-show="graphElements && graphElements.length != 0">
+    <div class="col-md-12">
         <table class="table table-condensed table-hover displayTable">
             <thead>
                 <tr>
-                   <th>#</th>
-                   <th>rev</th>
                    <th ng-repeat="key in artifactProperties" style="white-space:nowrap">
                        <span ng-click="$parent.setOrdering(key)">
                            <i ng-if="ordering == key && reverse" class="fa fa-sort-down"></i>
@@ -26,7 +26,6 @@
             </thead>
             <tbody>
                 <tr ng-repeat="vertex in graphElements | orderBy:ordering:reverse">
-                    <td>{{vertex.index}}</td>
                     <td style="white-space:nowrap" ng-repeat="key in artifactProperties">
                         <span data-toggle="tooltip" data-placement="top" title="{{key}}">{{vertex[key]}}</span>
                     </td>
@@ -37,4 +36,8 @@
 
     <h4 ng-if="errors" ng-repeat="error in errors" class="text-danger">{{error}}</h4>
     <h4 ng-if="graphElements.length == 0" class="text-info">No results found</h4>
+</div>-->
+
+<div ng-show="!graphElements">
+    <h3>Loading...</h3>
 </div>

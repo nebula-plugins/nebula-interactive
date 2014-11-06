@@ -4,9 +4,8 @@
 
 .node text {
     font: 12px sans-serif;
-    font-weight: bold;
     fill: black;
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 .link {
@@ -17,7 +16,7 @@
 }
 
 .firstOrderLink {
-    stroke: orange;
+    stroke: magenta;
     stroke-opacity: .8;
     stroke-width: 2;
     marker-end: url(#end-arrow);

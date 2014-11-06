@@ -1,5 +1,5 @@
 {
-  "name": "graph-query-ui",
+  "name": "gradle-interactive",
   "private": true,
   "ignore": [
     "**/.*",
@@ -12,18 +12,14 @@
     "angular": "latest",
     "angular-hotkeys": "latest",
     "angular-mocks": "latest",
-    "angular-cookies": "latest",
     "restangular": "~1.4.0",
     "d3": "latest",
     "d3-tip": "latest",
     "font-awesome": "~4.1.0",
-    "bootstrap-multiselect": "latest",
-    "stomp-websocket": "latest",
-    "sockjs": "latest",
-    "codemirror": "latest",
     "webcola": "latest",
     "angular-sanitize": "latest",
     "angular-route": "latest",
-    "colorbrewer": "latest"
+    "colorbrewer": "latest",
+    "typeahead.js": "latest"
   }
 }

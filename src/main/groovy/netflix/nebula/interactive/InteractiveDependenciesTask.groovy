@@ -54,7 +54,6 @@ class InteractiveDependenciesTask extends DefaultTask {
         ]
 
         def resultJson = new ObjectMapper().writeValueAsString(results)
-        println resultJson
 
         def server = null
         try {
@@ -70,7 +69,7 @@ class InteractiveDependenciesTask extends DefaultTask {
                         { request, response ->
                             response.getHeaders().set(HttpHeaders.Names.CONTENT_TYPE, 'application/json');
                             response.writeString(resultJson)
-                            latch.countDown()
+//                            latch.countDown()
                         } as RequestHandler
                     )
                     .noMatch(

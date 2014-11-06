@@ -66,6 +66,7 @@ app.controller('DependenciesCtrl', function($scope, Restangular) {
         .attr('class', 'background')
         .attr('width', '100%')
         .attr('height', '100%')
+        .on("click", function() { focusOnNode(root) })
         .call(zoom.on("zoom", function() { zoomed(d3.event.translate, d3.event.scale) }));
 
     var viewport = svg.append('g');
@@ -138,7 +139,7 @@ app.controller('DependenciesCtrl', function($scope, Restangular) {
 
         li.attr("transform", "translate(50,50)");
 
-        var labels = ['focus','nearest','near','far','farther'];
+        var labels = ['focus','nearest to focus','near','far','farther'];
 
         li.selectAll("text")
             .data(labels)
@@ -341,7 +342,7 @@ app.controller('DependenciesCtrl', function($scope, Restangular) {
 
         viewport.selectAll(".link")
             .style("stroke-opacity", function(d) {
-                return (distMatrix.dist(focus, d.target) < Infinity || inPath(d)) ? 1.0 : 0.1;
+                return (distMatrix.dist(focus, d.target) < Infinity || inPath(d)) ? 0.6 : 0.1;
             })
             .style("stroke", function(d) { return inPath(d) ? 'magenta' : '#999' })
             .style("stroke-dasharray", function(d) { return inPath(d) ? "5,5" : "0,0" });

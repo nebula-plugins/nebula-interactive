@@ -22,3 +22,5 @@ From the command line, run
 ```groovy
 gradle interactive
 ```
+
+![Example visualization](https://github.com/nebula-plugins/nebula-interactive/wiki/screenshot.png)

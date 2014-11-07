@@ -23,4 +23,4 @@ From the command line, run
 gradle interactive
 ```
 
-![Example visualization](https://github.com/nebula-plugins/nebula-interactive/wiki/screenshot.png)
+![Example visualization](https://raw.githubusercontent.com/nebula-plugins/nebula-interactive/master/wiki/screenshot.png)

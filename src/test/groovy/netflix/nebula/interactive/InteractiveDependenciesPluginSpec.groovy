@@ -1,8 +1,14 @@
 package netflix.nebula.interactive
 
 import nebula.test.IntegrationSpec
+import spock.lang.Ignore
 
 class InteractiveDependenciesPluginSpec extends IntegrationSpec {
+    def setup() {
+        fork = true
+    }
+
+    @Ignore
     def 'opens browser'() {
         setup:
         buildFile << '''
@@ -10,7 +16,6 @@ class InteractiveDependenciesPluginSpec extends IntegrationSpec {
             apply plugin: 'nebula-interactive'
             group = 'netflix'
             repositories { mavenCentral() }
-//            dependencies { compile 'org.springframework:spring-tx:+' }
             dependencies {
                 compile 'com.thinkaurelius.titan:titan-core:+'
                 compile 'com.thinkaurelius.titan:titan-cassandra:+'

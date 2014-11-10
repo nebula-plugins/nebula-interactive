@@ -34,10 +34,10 @@ class InteractiveDependenciesTask extends DefaultTask {
 
     ResolvedDependency projectAsResolvedDependency() {
         [
-            getModuleGroup: { project.group },
-            getModuleName: { project.name },
-            getModuleVersion: { project.version },
-            getChildren: { project.configurations.compile.resolvedConfiguration.firstLevelModuleDependencies }
+                getModuleGroup: { project.group },
+                getModuleName: { project.name },
+                getModuleVersion: { project.version },
+                getChildren: { project.configurations.compile.resolvedConfiguration.firstLevelModuleDependencies }
         ] as ResolvedDependency
     }
 

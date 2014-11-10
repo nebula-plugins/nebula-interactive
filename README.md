@@ -22,7 +22,7 @@ buildscript {
     }
 }
 
-apply plugin: 'nebula-ospackage-daemon'
+apply plugin: 'nebula-interactive'
 ```
 
 From the command line, run

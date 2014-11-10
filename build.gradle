@@ -16,6 +16,13 @@ apply plugin: 'groovy'
 apply plugin: 'com.moowork.grunt'
 apply plugin: 'com.moowork.node'
 
+contacts {
+    'joschneider@netflix.com' {
+        moniker 'Jon Schneider'
+        github 'jkschneider'
+    }
+}
+
 repositories {
     mavenCentral()
 }

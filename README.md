@@ -34,4 +34,4 @@ gradle interactive
 Example visualization
 ---------------------
 
-![Example visualization](https://raw.githubusercontent.com/nebula-plugins/nebula-interactive/master/wiki/screenshot.png)
+![Example visualization](https://raw.githubusercontent.com/nebula-plugins/nebula-interactive/gradle-2.0/wiki/screenshot.png)

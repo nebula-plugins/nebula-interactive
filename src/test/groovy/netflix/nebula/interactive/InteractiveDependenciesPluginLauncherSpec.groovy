@@ -26,13 +26,4 @@ class InteractiveDependenciesPluginLauncherSpec extends IntegrationSpec {
         expect:
         runTasksSuccessfully('interactive')
     }
-
-    def 'tooling-api-custom-model'() {
-        setup:
-        buildFile = new File('/Users/joschneider/Projects/github/bmuschko/tooling-api-custom-model/plugin/build.gradle')
-
-        expect:
-        buildFile.exists()
-        runTasksSuccessfully('interactive')
-    }
 }

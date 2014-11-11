@@ -67,6 +67,7 @@ class InteractiveDependenciesTask extends DefaultTask {
                             response.getHeaders().set(HttpHeaders.Names.CONTENT_TYPE, 'application/json');
                             response.writeString(resultJson)
                             latch.countDown()
+                            response.close()
                         } as RequestHandler
                     )
                     .noMatch(staticHandler)

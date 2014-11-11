@@ -1,15 +1,15 @@
-subprojects {
-    buildscript {
-        repositories {
-            mavenCentral()
-            maven { url 'https://oss.jfrog.org/oss-snapshot-local' }
-        }
-
-        dependencies {
-            classpath 'com.netflix.nebula:nebula-interactive:2.0.1+'
-        }
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://oss.jfrog.org/oss-snapshot-local' }
     }
 
+    dependencies {
+        classpath 'com.netflix.nebula:nebula-interactive:2.0.1+'
+    }
+}
+
+subprojects {
     apply plugin: 'java'
     apply plugin: 'nebula-interactive'
 
@@ -26,6 +26,6 @@ project(':a') {
 
 project(':b') {
     dependencies {
-        project(':a')
+        compile project(':a')
     }
 }

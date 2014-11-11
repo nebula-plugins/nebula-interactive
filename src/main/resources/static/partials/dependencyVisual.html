@@ -1,41 +1,12 @@
-<div class="row" style="margin-left:20px" ng-show="graphElements && graphElements.length != 0" style="margin-top:10px">
+<div class="row" style="margin-left:20px" ng-show="!loading" style="margin-top:10px">
     <h2><span style="color:#999">{{graphElements[0].org}}</span> #{{graphElements[0].name}}</h2>
     <input id="search" class="typeahead" type="text" placeholder="dependency search">
 </div>
 
-<div ng-show="graphElements && graphElements.length != 0" style="margin-top:10px">
+<div ng-show="!loading" style="margin-top:10px">
     <div id="graph"></div>
 </div>
 
-<!--<div class="row" ng-show="graphElements && graphElements.length != 0">
-    <div class="col-md-12">
-        <table class="table table-condensed table-hover displayTable">
-            <thead>
-                <tr>
-                   <th ng-repeat="key in artifactProperties" style="white-space:nowrap">
-                       <span ng-click="$parent.setOrdering(key)">
-                           <i ng-if="ordering == key && reverse" class="fa fa-sort-down"></i>
-                           <i ng-if="ordering == key && !reverse" class="fa fa-sort-up"></i>
-                           <i ng-if="ordering != key" class="fa fa-sort"></i>
-                           {{key}}
-                       </span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="vertex in graphElements | orderBy:ordering:reverse">
-                    <td style="white-space:nowrap" ng-repeat="key in artifactProperties">
-                        <span data-toggle="tooltip" data-placement="top" title="{{key}}">{{vertex[key]}}</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <h4 ng-if="errors" ng-repeat="error in errors" class="text-danger">{{error}}</h4>
-    <h4 ng-if="graphElements.length == 0" class="text-info">No results found</h4>
-</div>-->
-
-<div ng-show="!graphElements">
-    <h3>Loading...</h3>
+<div ng-show="loading">
+    <h3 style="margin-left: 20px">Loading...</h3>
 </div>

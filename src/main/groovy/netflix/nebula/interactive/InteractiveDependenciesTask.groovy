@@ -34,7 +34,7 @@ class InteractiveDependenciesTask extends DefaultTask {
                 getModuleGroup: { project.group },
                 getModuleName: { project.name },
                 getModuleVersion: { project.version },
-                getChildren: { project.configurations.compile.resolvedConfiguration.firstLevelModuleDependencies }
+                getChildren: { project.configurations.testRuntime.resolvedConfiguration.firstLevelModuleDependencies }
         ] as ResolvedDependency
     }
 
@@ -64,19 +64,14 @@ class InteractiveDependenciesTask extends DefaultTask {
                 new HttpRouter()
                     .get('/dependencies',
                         { request, response ->
-                            println 'Rest request'
                             response.getHeaders().set(HttpHeaders.Names.CONTENT_TYPE, 'application/json');
                             response.writeString(resultJson)
                             latch.countDown()
                         } as RequestHandler
                     )
-                    .noMatch({ request, response ->
-                        println 'Static request: ' + request.getUri()
-                        staticHandler.handle(request, response)
-                    } as RequestHandler)
+                    .noMatch(staticHandler)
             ).start()
 
-            println "Starting browser"
             Desktop.getDesktop().browse(new URI("http://localhost:$PORT/index.html"))
 
             latch.await(60, TimeUnit.SECONDS)

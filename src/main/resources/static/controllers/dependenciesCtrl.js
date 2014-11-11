@@ -3,6 +3,7 @@ app.controller('DependenciesCtrl', function($scope, Restangular) {
     $scope.artifactProperties = ['org', 'name', 'version'];
     $scope.ordering = 'name';
     $scope.reverse = false;
+    $scope.loading = true;
 
     var graph; // the set of nodes and links in the current visualization
     var linkSpan; // a spanning tree of the graph
@@ -275,6 +276,8 @@ app.controller('DependenciesCtrl', function($scope, Restangular) {
         force.on("end", function() {
             focusOnNode(root);
             zoomAndCenter();
+            $scope.loading = false;
+            $scope.$apply();
         });
     }
 
@@ -380,23 +383,32 @@ app.controller('DependenciesCtrl', function($scope, Restangular) {
 
         var scale = boundingAspectRatio > aspectRatio ? width/bounds.w : height/bounds.h;
         var targetWidth = boundingAspectRatio > aspectRatio ? bounds.w : width/scale;
+
         var translate = [-bounds.x*scale, -bounds.y*scale];
 
-        var i = d3.interpolateZoom([zoom.translate()[0], zoom.translate()[1], width*zoom.scale()],
-            [translate[0], translate[1], targetWidth]);
+        if(scale > 1.5) {
+            scale = 1.5;
+            targetWidth = bounds.w/1.5;
+            translate = [-bounds.x*scale+200, -bounds.y*scale];
+        }
 
-        viewport.transition().delay(100)
-            .duration(i.duration/2)
-            .attrTween("transform", function() {
-                return function(t) {
-                    var p = i(t);
-                    return "translate(" + p[0] + "," + p[1] + ")scale(" + (width / p[2]) + ")";
-                }
-            })
-            .each("end", function() {
-                zoom.translate(translate);
-                zoom.scale(scale);
-            });
+//        var i = d3.interpolateZoom([zoom.translate()[0], zoom.translate()[1], width*zoom.scale()],
+//            [translate[0], translate[1], targetWidth]);
+//
+//        viewport.transition().delay(100)
+//            .duration(i.duration/2)
+//            .attrTween("transform", function() {
+//                return function(t) {
+//                    var p = i(t);
+//                    return "translate(" + p[0] + "," + p[1] + ")scale(" + (width / p[2]) + ")";
+//                }
+//            })
+//            .each("end", function() {
+//                zoom.translate(translate);
+//                zoom.scale(scale);
+//            });
+
+        zoomed(translate, scale);
 
         viewport.selectAll(".node text")
             .style("font-size", fontScale(scale) + "px");

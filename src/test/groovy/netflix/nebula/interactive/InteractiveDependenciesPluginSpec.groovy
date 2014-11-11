@@ -1,6 +1,7 @@
 package netflix.nebula.interactive
 
 import nebula.test.PluginProjectSpec
+import org.gradle.api.artifacts.ResolveException
 import org.gradle.api.artifacts.ResolvedDependency
 import org.gradle.api.plugins.GroovyPlugin
 import org.gradle.api.plugins.JavaPlugin
@@ -105,5 +106,22 @@ class InteractiveDependenciesPluginSpec extends PluginProjectSpec {
         then:
         nodes.size() == 2
         nodes*.name.sort() == ['a','b']
+    }
+
+    def 'throws exception when dependencies are unresolvable'() {
+        when:
+        project.plugins.apply(JavaPlugin)
+        project.plugins.apply(InteractiveDependenciesPlugin)
+
+        project.repositories { mavenCentral() }
+        project.dependencies { compile 'doesnot:exist:1.0' }
+
+        def nodes = new LinkedHashSet()
+
+        def interactive = project.tasks.interactive
+        interactive.recurseDependencies(nodes, [] as Set, interactive.projectAsResolvedDependency(), 0)
+
+        then:
+        thrown(ResolveException)
     }
 }

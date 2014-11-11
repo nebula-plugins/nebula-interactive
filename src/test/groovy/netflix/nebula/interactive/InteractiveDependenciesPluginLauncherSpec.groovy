@@ -28,4 +28,21 @@ class InteractiveDependenciesPluginLauncherSpec extends IntegrationSpec {
         expect:
         runTasksSuccessfully('interactive')
     }
+
+    @IgnoreIf({ System.getenv('JENKINS_URL') })
+    def 'max zoom boundary'() {
+        setup:
+        buildFile << '''
+            apply plugin: 'java'
+            apply plugin: 'nebula-interactive'
+            group = 'netflix'
+            repositories { mavenCentral() }
+            dependencies {
+                compile 'com.google.guava:guava:+'
+            }
+        '''.stripIndent()
+
+        expect:
+        runTasksSuccessfully('interactive')
+    }
 }

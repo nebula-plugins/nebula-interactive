@@ -15,7 +15,6 @@
     "d3": "latest",
     "d3-tip": "latest",
     "webcola": "latest",
-    "angular-sanitize": "latest",
     "angular-route": "latest",
     "colorbrewer": "latest",
     "typeahead.js": "latest"

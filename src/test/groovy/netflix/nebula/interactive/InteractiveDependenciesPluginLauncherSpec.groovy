@@ -2,13 +2,15 @@ package netflix.nebula.interactive
 
 import nebula.test.IntegrationSpec
 import spock.lang.Ignore
+import spock.lang.IgnoreIf
 
 class InteractiveDependenciesPluginLauncherSpec extends IntegrationSpec {
     def setup() {
         fork = true
     }
 
-//    @Ignore
+    // we can't launch a browser from jenkins
+    @IgnoreIf({ System.getenv('JENKINS_URL') })
     def 'opens browser'() {
         setup:
         buildFile << '''

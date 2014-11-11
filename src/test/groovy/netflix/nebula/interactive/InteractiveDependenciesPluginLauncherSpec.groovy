@@ -8,7 +8,7 @@ class InteractiveDependenciesPluginLauncherSpec extends IntegrationSpec {
         fork = true
     }
 
-    @Ignore
+//    @Ignore
     def 'opens browser'() {
         setup:
         buildFile << '''

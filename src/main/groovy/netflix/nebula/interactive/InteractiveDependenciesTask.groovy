@@ -59,10 +59,6 @@ class InteractiveDependenciesTask extends DefaultTask {
         try {
             def latch = new CountDownLatch(1)
 
-            def staticHandler = RequestHandlerWithErrorMapper.from(
-                    new ClassPathFileRequestHandler('./static'),
-                    new FileErrorResponseMapper())
-
             server = RxNetty.createHttpServer(PORT,
                 new HttpRouter()
                     .get('/dependencies',
@@ -73,7 +69,9 @@ class InteractiveDependenciesTask extends DefaultTask {
                         } as RequestHandler
                     )
                     .noMatch(
-                        staticHandler
+                        RequestHandlerWithErrorMapper.from(
+                            new ClassPathFileRequestHandler('static'),
+                            new FileErrorResponseMapper())
                     )
             ).start()
 

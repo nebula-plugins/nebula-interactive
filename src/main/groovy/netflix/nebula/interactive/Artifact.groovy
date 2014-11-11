@@ -17,4 +17,8 @@ class Artifact {
         this.name = dep.moduleName
         this.version = dep.moduleVersion
     }
+
+    String getJson() {
+        """{"name":"$name","version":"$version","org":"$org","index":$index}"""
+    }
 }

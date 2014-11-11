@@ -1,6 +1,5 @@
 package netflix.nebula.interactive
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.netty.handler.codec.http.HttpHeaders
 import io.reactivex.netty.RxNetty
 import io.reactivex.netty.protocol.http.server.RequestHandler
@@ -40,8 +39,8 @@ class InteractiveDependenciesTask extends DefaultTask {
 
     @TaskAction
     def serveInteractiveContent() {
-        def links = new HashSet()
-        def nodes = new LinkedHashSet()
+        def links = new HashSet<Link>()
+        def nodes = new LinkedHashSet<Artifact>()
 
         recurseDependencies(nodes, links, projectAsResolvedDependency(), 0)
 
@@ -50,10 +49,13 @@ class InteractiveDependenciesTask extends DefaultTask {
             links: links.collect { link -> [source: link.source.index, target: nodes.find { it == link.target }.index] }
         ]
 
-        println 'nodes: ' + nodes
-        println 'links: ' + links
+        def nodesJson = nodes.collect { it.json }.join(',')
+        def linksJson = links.collect { link ->
+            def targetIndex = nodes.find { it == link.target }.index
+            """{"source":$link.source.index,"target":$targetIndex}"""
+        }.join(',')
 
-        def resultJson = new ObjectMapper().writeValueAsString(results)
+        def resultJson = """{"nodes":[$nodesJson],"links":[$linksJson]}"""
 
         def server = null
         try {

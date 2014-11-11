@@ -18,7 +18,7 @@ buildscript {
     repositories { jcenter() }
 
     dependencies {
-        classpath 'com.netflix.nebula:nebula-interactive:2.0.1'
+        classpath 'com.netflix.nebula:nebula-interactive:2.0.+'
     }
 }
 

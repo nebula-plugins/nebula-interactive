@@ -50,6 +50,9 @@ class InteractiveDependenciesTask extends DefaultTask {
             links: links.collect { link -> [source: link.source.index, target: nodes.find { it == link.target }.index] }
         ]
 
+        println 'nodes: ' + nodes
+        println 'links: ' + links
+
         def resultJson = new ObjectMapper().writeValueAsString(results)
 
         def server = null

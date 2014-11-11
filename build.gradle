@@ -33,10 +33,6 @@ node {
     download = true
 }
 
-configurations {
-    all { exclude module: 'xercesImpl' }
-}
-
 dependencies {
     compile gradleApi()
     compile 'org.codehaus.groovy:groovy-all:2.3.3'

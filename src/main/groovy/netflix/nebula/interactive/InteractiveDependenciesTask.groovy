@@ -59,22 +59,27 @@ class InteractiveDependenciesTask extends DefaultTask {
         try {
             def latch = new CountDownLatch(1)
 
+            def staticHandler = RequestHandlerWithErrorMapper.from(
+                    new ClassPathFileRequestHandler('static'),
+                    new FileErrorResponseMapper())
+
             server = RxNetty.createHttpServer(PORT,
                 new HttpRouter()
                     .get('/dependencies',
                         { request, response ->
+                            println 'Rest request'
                             response.getHeaders().set(HttpHeaders.Names.CONTENT_TYPE, 'application/json');
                             response.writeString(resultJson)
                             latch.countDown()
                         } as RequestHandler
                     )
-                    .noMatch(
-                        RequestHandlerWithErrorMapper.from(
-                            new ClassPathFileRequestHandler('static'),
-                            new FileErrorResponseMapper())
-                    )
+                    .noMatch({ request, response ->
+                        println 'Static request: ' + request.getUri()
+                        staticHandler.handle(request, response)
+                    } as RequestHandler)
             ).start()
 
+            println "Starting browser"
             Desktop.getDesktop().browse(new URI("http://localhost:$PORT/index.html"))
 
             latch.await(60, TimeUnit.SECONDS)

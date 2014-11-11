@@ -1,19 +1,16 @@
 package netflix.nebula.interactive
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import groovy.transform.Canonical
-import groovy.transform.EqualsAndHashCode
 import io.netty.handler.codec.http.HttpHeaders
 import io.reactivex.netty.RxNetty
 import io.reactivex.netty.protocol.http.server.RequestHandler
 import io.reactivex.netty.protocol.http.server.RequestHandlerWithErrorMapper
-import io.reactivex.netty.protocol.http.server.file.ClassPathFileRequestHandler
 import io.reactivex.netty.protocol.http.server.file.FileErrorResponseMapper
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.ResolvedDependency
 import org.gradle.api.tasks.TaskAction
 
-import java.awt.Desktop
+import java.awt.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 

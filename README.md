@@ -11,7 +11,7 @@ The interactive visualization is launched in a new browser window upon execution
 Usage
 ------
 
-First apply the nebula-interactive plugin:
+Apply the nebula-interactive plugin:
 
 ```groovy
 buildscript {
@@ -25,7 +25,7 @@ buildscript {
 apply plugin: 'nebula-interactive'
 ```
 
-From the command line, run
+Run the `interactive` task, which will launch a browser window after dependencies are resolved:
 
 ```groovy
 gradle interactive

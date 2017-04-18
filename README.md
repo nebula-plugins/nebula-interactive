@@ -1,3 +1,8 @@
+DEPRECATED
+==========
+
+We no longer support this plugin and plan to remove it from our Github organization on May 15, 2017. If you would like to take ownership of this plugin, please file an issue declaring your interest.
+
 Nebula Interactive
 ==================
 
